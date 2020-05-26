@@ -1,0 +1,53 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+.nav {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  height: 60px;
+  border-bottom: 1px solid #cccccc;
+  margin-bottom: 3em;
+}
+.nav-menu-items {
+  display: flex;
+  flex: 3;
+  justify-content: flex-start;
+  align-items: center;
+}
+.nav-menu-item {
+  margin-left: 1em;
+}
+.nav-loginout {
+  display: flex;
+  flex: 2;
+  justify-content: flex-end;
+  align-items: center;
+}
+.nav-loginout img {
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.nav-loginout button {
+  margin-right: 1em;
+  margin-left: 3em;
+}
+
+
+main {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+}
