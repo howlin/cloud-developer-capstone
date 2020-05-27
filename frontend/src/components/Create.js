@@ -1,39 +1,32 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/fontawesome-free-solid'
 import { faStar as farStar } from '@fortawesome/fontawesome-free-regular'
 import Rating from 'react-rating'
 
-class Create extends Component {
-  constructor( props ) {
-    super( props )
-    this.state = {
-      shop: '',
-      rating: 0,
-      review: '',
-      photo: ''
-    }
+const Create = () => {
+
+  const [ state, setState ] = useState({
+    shop: '',
+    rating: 0,
+    review: '',
+    photo: ''
+  })
+
+  const handleReviewChange = ( e ) => {
+    e.persist()
+    setState(prev => ({...prev, review: e.target.value}))
   }
-  handleShopChange = ( e ) => {
-    this.setState({shop: e.target.value})
-  }
-  handleReviewChange = ( e ) => {
-    this.setState({review: e.target.value})
-  }
-  handleRatingChange = ( value ) => {
-    this.setState({rating: value})
-  }
-  render() {
-    return (
-      <div className="create-form">
-        
+
+  return (
+    <div className="create-form">
         <form>
           <div className="form-control">
             <div className="form-element-label">
-              <label>Shop Name:</label>
+              <label>_Shop Name:</label>
             </div>
             <div className="form-element">
-              <select value={this.state.shop} onChange={this.handleShopChange}>
+              <select value={state.shop} onChange={ e  => setState( prev => ({ ...prev, shop: e.target.value})) }>
                 <option value=""></option>
                 <option value="Carters">Carters</option>
                 <option value="Blackfriars Coffee">Blackfriars Coffee</option>
@@ -47,8 +40,8 @@ class Create extends Component {
             </div>
             <div className="form-element">
               <Rating 
-                initialRating={this.state.rating}
-                onChange={this.handleRatingChange}
+                initialRating={state.rating}
+                onChange={ value => setState(prev => ({ ...prev, rating: value })) }
                 emptySymbol={<FontAwesomeIcon icon={farStar} />}
                 fullSymbol={<FontAwesomeIcon icon={fasStar} />} />
             </div>
@@ -58,10 +51,10 @@ class Create extends Component {
               <label>Review:</label>
             </div>
             <div className="form-element">
-              <textarea 
-                className="form-element-textarea"
-                value={this.state.review} 
-                onChange={this.handleReviewChange}>
+              <textarea
+                value={state.review}
+                onChange={handleReviewChange}
+                className="form-element-textarea">
               </textarea>
             </div>
           </div>
@@ -81,8 +74,7 @@ class Create extends Component {
           </div>
         </form>
       </div>
-    )
-  }
+  )
 }
 
 export default Create
