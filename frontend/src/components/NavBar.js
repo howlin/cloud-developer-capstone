@@ -20,7 +20,7 @@ const NavBar = () => {
         {isAuthenticated && 
             <div className="nav-loginout">
               <img src={user.picture} alt="Profile" />
-              <span>Welcome {user.name}</span>
+              <span>Welcome {user.given_name}</span>
               <button onClick={() => logout()}>Log out</button>
             </div>}
       </div>
