@@ -76,6 +76,8 @@ const Create = (props) => {
                 <option value="Carters">Carters</option>
                 <option value="Blackfriars Coffee">Blackfriars Coffee</option>
                 <option value="Gallweys Chocolate Cafe">Gallweys Chocolate Cafe</option>
+                <option value="Costa">Costa</option>
+                <option value="Starbucks">Starbucks</option>
               </select>
             </div>
           </div>
