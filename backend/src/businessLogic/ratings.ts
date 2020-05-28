@@ -38,3 +38,8 @@ export async function generateUploadUrl(ratingId: string, jwtToken: string) : Pr
 
   return await ratingAccess.generateUploadUrl(imageId)
 }
+
+export async function deleteRating(ratingId: string, jwtToken: string): Promise<void> {
+  const userId = parseUserId(jwtToken)
+  return await ratingAccess.deleteRating(ratingId, userId)
+}

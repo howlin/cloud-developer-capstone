@@ -92,6 +92,21 @@ functions:
           - s3:GetObject
         Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
 
+  DeleteRating:
+    handler: src/lambda/http/deleteRating.handler
+    iamRoleStatementsInherit: true
+    events:
+      - http:
+          method: delete
+          authorizer: Auth
+          cors: true
+          path: ratings/{ratingId}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RATINGS_TABLE}
+
 
 # ---------------------------------------------------------------------
 

@@ -75,4 +75,17 @@ export class RatingAccess {
       Expires: Number(this.urlExpiration)
     })
   }
+
+  async deleteRating(ratingId: string, userId: string){
+    logger.info('delete rating')
+    const params = {
+      TableName: this.ratingsTable,
+      Key: {
+        userId: userId,
+        ratingId: ratingId
+      }
+    }
+
+    await this.docClient.delete(params).promise()
+  }
 }

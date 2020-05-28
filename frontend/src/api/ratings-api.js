@@ -12,6 +12,15 @@ export async function getRatings(idToken) {
   return response.data.items
 }
 
+export async function deleteRating(idToken, ratingId) {
+  await Axios.delete(`${apiEndpoint}/ratings/${ratingId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken.__raw}`
+    }
+  })
+}
+
 export async function createRating(idToken, newRating) {
   const response = await addRatingToDB(idToken, newRating)
   let ratingItem = response.data.item
