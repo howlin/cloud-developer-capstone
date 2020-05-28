@@ -116,6 +116,7 @@ main {
   display: flex;
   flex-direction: column;
   flex: 3;
+  padding-left: 3vw;
   border: var(--test-border)  solid darkorchid;
 }
 .rating-card-heading {
@@ -143,6 +144,11 @@ main {
   border-radius: 5px;
   width: 8vw;
   height: 8vw;
+}
+.rating-card-image img {
+  width: 20vw;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.05);
 }
 .image-placeholder {
   color: pink;

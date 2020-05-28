@@ -14,10 +14,13 @@ const RatingCard = (props) => {
   return (
     <div className="rating-card">
       <div className="rating-card-holder">
-        <div className="rating-card-image"> 
-          <div className="rating-card-image-placeholder">
-            <FontAwesomeIcon icon={faImage} className="image-placeholder"  />
-          </div>
+        <div className="rating-card-image">
+          {rating.imageUrl 
+            ? <img src={rating.imageUrl} alt="Rating"/> 
+            : (<div className="rating-card-image-placeholder">
+                <FontAwesomeIcon icon={faImage} className="image-placeholder"  />
+              </div>)
+          }
         </div>
         <div className="rating-card-content">
           <div className="rating-card-heading">
