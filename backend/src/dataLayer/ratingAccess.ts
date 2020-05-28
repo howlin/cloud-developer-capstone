@@ -17,27 +17,31 @@ export class RatingAccess {
   ){}
 
   async createRating(rating: RatingItem): Promise<RatingItem> {
-    logger.info('Create a damn rating')
-    await this.docClient.put({
+    const params = {
       TableName: this.ratingsTable,
       Item: rating
-    }).promise()
+    }
+    logger.info('Create a damn rating', params)
+    await this.docClient.put(params).promise()
 
     return rating
   }
 
-  async addImageToTodo(imageId: string, todoId: string, userId: string) {
+  async addImageToRating(imageId: string, ratingId: string, userId: string) {
+    logger.info('Create a damn rating')
     const params = {
       TableName: this.ratingsTable,
       Key: {
         userId: userId,
-        todoId: todoId
+        ratingId: ratingId
       },
       UpdateExpression: "set imageUrl = :imageUrl",
       ExpressionAttributeValues: {
-        ':imageUrl': `https://${this.bucketName}.s3.amazonaws.com/${imageId}`
+        ':imageUrl': `https://${this.bucketName}.s3-eu-west-1.amazonaws.com/${imageId}`
       }
     }
+
+    logger.info('Params', params)
 
     return await this.docClient.update(params).promise()
   }

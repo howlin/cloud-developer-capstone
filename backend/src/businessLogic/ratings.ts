@@ -24,3 +24,12 @@ export async function createRating(
   })
   
 }
+
+export async function generateUploadUrl(todoId: string, jwtToken: string) : Promise<string> {
+  const userId = parseUserId(jwtToken)
+  const imageId = uuid.v4()
+
+  await ratingAccess.addImageToRating(imageId, todoId, userId)
+
+  return await ratingAccess.generateUploadUrl(imageId)
+}
