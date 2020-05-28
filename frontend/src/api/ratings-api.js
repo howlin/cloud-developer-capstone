@@ -28,31 +28,26 @@ export async function createRating(idToken, newRating) {
 }
 
 async function addRatingToDB(idToken, newRating) {
-  console.log('1. addRatingToDB - starting', {idToken, newRating})
   const response = await Axios.post(`${apiEndpoint}/ratings`, JSON.stringify(newRating), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken.__raw}`
     }
   })
-  console.log('2. addRatingToDB - finished', response)
   return response
 }
 
 async function getImageUploadURL(idToken, ratingId) {
-  console.log('1. getImageUploadURL - starting', {idToken, ratingId})
   const response = await Axios.post(`${apiEndpoint}/ratings/${ratingId}/attachment`, '', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken.__raw}`
     }
   })
-  console.log('2. getImageUploadURL - finished', {response})
   return response.data.uploadUrl
 }
 
 async function uploadFile(uploadUrl, file) {
-  console.log('1. getImageUploadURL - starting', {uploadUrl, file})
   const result = await Axios.put(uploadUrl, file)
-  console.log('2. getImageUploadURL - finishing', {result})
+  return result
 }
