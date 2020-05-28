@@ -12,9 +12,30 @@ export class RatingAccess {
     private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
     private readonly s3 = new XAWS.S3({signatureVersion: 'v4'}),
     private readonly ratingsTable = process.env.RATINGS_TABLE,
+    private readonly ratingsIndex = process.env.RATINGS_INDEX,
     private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
     private readonly bucketName = process.env.IMAGES_S3_BUCKET
   ){}
+
+  async getAllRatings(userId: string): Promise<RatingItem[]> {
+    logger.info('Getting all ratings')
+
+    const query = {
+      TableName: this.ratingsTable,
+      ScanIndexForward: false,
+      IndexName: this.ratingsIndex,
+      KeyConditionExpression: 'userId = :userId',
+      ExpressionAttributeValues: {
+        ':userId': userId
+      },
+      ProjectionExpression: 'ratingId, createdAt, shop, review, rating, imageUrl'
+    }
+
+    const result = await this.docClient.query(query).promise()
+    const items = result.Items
+
+    return items as RatingItem[]
+  }
 
   async createRating(rating: RatingItem): Promise<RatingItem> {
     const params = {

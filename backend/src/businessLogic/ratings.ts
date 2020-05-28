@@ -6,8 +6,13 @@ import { parseUserId } from '../auth/utils'
 
 const ratingAccess = new RatingAccess()
 
+export async function getAllRatings(jwtToken: string): Promise<RatingItem[]> {
+  const userId = parseUserId(jwtToken)
+  return ratingAccess.getAllRatings(userId)
+}
+
 export async function createRating(
-  createTodoRequest: CreateRatingRequest,
+  createRatingRequest: CreateRatingRequest,
   jwtToken: string
 ): Promise<RatingItem> {
 
@@ -18,18 +23,18 @@ export async function createRating(
     userId,
     ratingId,
     createdAt: new Date().toISOString(),
-    shop: createTodoRequest.shop,
-    rating: createTodoRequest.rating,
-    review: createTodoRequest.review
+    shop: createRatingRequest.shop,
+    rating: createRatingRequest.rating,
+    review: createRatingRequest.review
   })
   
 }
 
-export async function generateUploadUrl(todoId: string, jwtToken: string) : Promise<string> {
+export async function generateUploadUrl(ratingId: string, jwtToken: string) : Promise<string> {
   const userId = parseUserId(jwtToken)
   const imageId = uuid.v4()
 
-  await ratingAccess.addImageToRating(imageId, todoId, userId)
+  await ratingAccess.addImageToRating(imageId, ratingId, userId)
 
   return await ratingAccess.generateUploadUrl(imageId)
 }

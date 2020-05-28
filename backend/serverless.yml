@@ -39,6 +39,21 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
+  GetRatings:
+    handler: src/lambda/http/getRatings.handler
+    iamRoleStatementsInherit: true
+    events:
+      - http:
+          method: get
+          authorizer: Auth
+          cors: true
+          path: ratings
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RATINGS_TABLE}/index/${self:provider.environment.RATINGS_INDEX}
+
   CreateRatings:
     handler: src/lambda/http/createRating.handler
     iamRoleStatementsInherit: true

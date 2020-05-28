@@ -1,6 +1,16 @@
 import { apiEndpoint } from '../config'
 import Axios from 'axios'
 
+export async function getRatings(idToken) {
+  const response = await Axios.get(`${apiEndpoint}/ratings`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken.__raw}`
+    },
+  })
+  console.log('Todos:', response.data)
+  return response.data.items
+}
 
 export async function createRating(idToken, newRating) {
   const response = await addRatingToDB(idToken, newRating)
