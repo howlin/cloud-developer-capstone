@@ -55,7 +55,7 @@ function App() {
         </header>
         <main>
           <Switch>
-            <PrivateRoute path='/' ratings={ratings} component={RatingList} exact />
+            <PrivateRoute path='/' refresh={refresh} ratings={ratings} component={RatingList} exact />
             <PrivateRoute path='/update/:ratingId' refresh={refresh} getRating={getRating} component={Create}  exact />
             <PrivateRoute path='/create' refresh={refresh} getRating={getRating} component={Create} exact />
             <PrivateRoute path='/profile' component={Profile} exact />

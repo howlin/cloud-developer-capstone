@@ -13,7 +13,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 const RatingCard = (props) => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0()
-  const { rating } = props
+  const { rating, refresh } = props
   const history = useHistory();
 
 
@@ -22,6 +22,7 @@ const RatingCard = (props) => {
 
     try {
       await deleteRating(jwt, rating.ratingId)
+      refresh()
     }
     catch (e) {
       alert('Rating creation failed')
@@ -68,7 +69,8 @@ const RatingCard = (props) => {
 }
 
 RatingCard.propTypes = {
-  rating: PropTypes.object.isRequired
+  rating: PropTypes.object.isRequired,
+  refresh: PropTypes.func.isRequired
 }
 
 export default RatingCard
