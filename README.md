@@ -36,7 +36,7 @@ The config details to connect to the backend and Auth0 are committed.   I’m le
 * Application has at least some of the following: 1) Distributed tracing is enabled, 2) It has a sufficient amount of log statements,  3) It generates application level metrics
 	* ✅ Done.  It uses AWS X-Ray
 
-![](https://github.com/howlin/cloud-developer-capstone/blob/master/udacity-notes/3759D618-0554-4314-90C6-78EF9D6A156D.png)
+![](https://github.com/howlin/cloud-developer-capstone/blob/master/udacity-notes/3759D618-0554-4314-90C6-78EF9D6A156D.png?s=300)
 
 * Incoming HTTP requests are validated either in Lambda handlers or using request validation in API Gateway. The latter can be done either using the **serverless-reqvalidator-plugin** or by providing request schemas in function definitions.
 	* ✅ Done.  Uses the request schemas in function definitions 
@@ -48,7 +48,7 @@ The config details to connect to the backend and Auth0 are committed.   I’m le
       - AttributeName: sortKey
         KeyType: RANGE
 ```
-	* ✅ Done.   I’ve used userId as the partition key.  If this was a real app I’d consider if the partition key should be a shopId.
+* ✅ Done.   I’ve used userId as the partition key.  If this was a real app I’d consider if the partition key should be a shopId.
 * Items are fetched using the “query()” method and not “scan()” method (which is less efficient on large datasets)
 	* ✅ Done.  
 
