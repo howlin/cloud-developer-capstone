@@ -41,10 +41,8 @@ export async function updateRating(idToken, ratingId, updatedRating) {
   let ratingItem = response.data.item
 
   if( updatedRating.file ) {
-    const ratingId = ratingItem.ratingId
     const uploadUrl = await getImageUploadURL(idToken, ratingId)
     ratingItem.attachementUrl = uploadUrl
-
     await uploadFile(uploadUrl, updatedRating.file)
   }
 
