@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <div className="nav">
       <div className="nav-menu-items">
-        <Link to="/" className="nav-menu-item">Home</Link>
+        <Link to="/" className="nav-menu-item">Your Ratings</Link>
         <Link to="/create" className="nav-menu-item">Create Rating</Link>
         <Link to="/profile" className="nav-menu-item">Profile</Link>
       </div>
@@ -20,7 +20,7 @@ const NavBar = () => {
         {isAuthenticated && 
             <div className="nav-loginout">
               <img src={user.picture} alt="Profile" />
-              <span>Welcome {user.name}</span>
+              <span>Welcome {user.given_name}</span>
               <button onClick={() => logout()}>Log out</button>
             </div>}
       </div>
