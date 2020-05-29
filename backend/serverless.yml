@@ -63,9 +63,9 @@ functions:
           authorizer: Auth
           cors: true
           path: ratings
-          # request:
-          #   schema:
-          #     application/json: ${file(models/create-rating-request.json)}
+          request:
+            schema:
+              application/json: ${file(models/rating-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -116,6 +116,9 @@ functions:
           authorizer: Auth
           cors: true
           path: ratings/{ratingId}
+          request:
+            schema:
+              application/json: ${file(models/rating-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:

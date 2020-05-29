@@ -46,8 +46,7 @@ const CreateEdit = (props) => {
         shop: state.shop,
         rating: state.rating,
         review: state.review,
-        file: state.file
-      })
+      }, state.file)
     }
     catch (e) {
       alert('Rating creation failed')
@@ -60,9 +59,8 @@ const CreateEdit = (props) => {
       await updateRating(jwt, ratingId, {
         shop: state.shop,
         rating: state.rating,
-        review: state.review,
-        file: state.file
-      })
+        review: state.review
+      }, state.file)
     }
     catch (e) {
       alert('Rating update failed')

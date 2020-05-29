@@ -21,29 +21,29 @@ export async function deleteRating(idToken, ratingId) {
   })
 }
 
-export async function createRating(idToken, newRating) {
+export async function createRating(idToken, newRating, file) {
   const response = await addRatingToDB(idToken, newRating)
   let ratingItem = response.data.item
 
-  if( newRating.file ) {
+  if( file ) {
     const ratingId = ratingItem.ratingId
     const uploadUrl = await getImageUploadURL(idToken, ratingId)
     ratingItem.attachementUrl = uploadUrl
 
-    await uploadFile(uploadUrl, newRating.file)
+    await uploadFile(uploadUrl, file)
   }
 
   return ratingItem
 }
 
-export async function updateRating(idToken, ratingId, updatedRating) {
+export async function updateRating(idToken, ratingId, updatedRating, file) {
   const response = await updateRatinginDB(idToken, ratingId, updatedRating)
   let ratingItem = response.data.item
 
-  if( updatedRating.file ) {
+  if( file ) {
     const uploadUrl = await getImageUploadURL(idToken, ratingId)
     ratingItem.attachementUrl = uploadUrl
-    await uploadFile(uploadUrl, updatedRating.file)
+    await uploadFile(uploadUrl, file)
   }
 
   return ratingItem
