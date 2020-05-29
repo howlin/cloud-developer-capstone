@@ -10,7 +10,7 @@ import { useAuth0 } from "../react-auth0-spa"
 
 import RingLoader from "react-spinners/RingLoader"
 
-const Create = (props) => {
+const CreateEdit = (props) => {
   const { getIdTokenClaims } = useAuth0()
   const history = useHistory();
   const ratingId = props.match.params.ratingId
@@ -160,9 +160,9 @@ const Create = (props) => {
   )
 }
 
-Create.propTypes = {
+CreateEdit.propTypes = {
   getRating: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired
 }
 
-export default Create
+export default CreateEdit

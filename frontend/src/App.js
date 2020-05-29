@@ -7,7 +7,7 @@ import history from './utils/history'
 import { getRatings } from './api/ratings-api'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './components/Profile'
-import Create from './components/Create'
+import CreateEdit from './components/CreateEdit'
 import RatingList from './components/RatingsList'
 
 function App() {
@@ -56,8 +56,8 @@ function App() {
         <main>
           <Switch>
             <PrivateRoute path='/' refresh={refresh} ratings={ratings} component={RatingList} exact />
-            <PrivateRoute path='/update/:ratingId' refresh={refresh} getRating={getRating} component={Create}  exact />
-            <PrivateRoute path='/create' refresh={refresh} getRating={getRating} component={Create} exact />
+            <PrivateRoute path='/update/:ratingId' refresh={refresh} getRating={getRating} component={CreateEdit}  exact />
+            <PrivateRoute path='/create' refresh={refresh} getRating={getRating} component={CreateEdit} exact />
             <PrivateRoute path='/profile' component={Profile} exact />
           </Switch>
         </main>
