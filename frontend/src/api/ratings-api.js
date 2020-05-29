@@ -2,6 +2,9 @@ import { apiEndpoint } from '../config'
 import Axios from 'axios'
 
 export async function getRatings(idToken) {
+
+  if(idToken === undefined) return
+
   const response = await Axios.get(`${apiEndpoint}/ratings`, {
     headers: {
       'Content-Type': 'application/json',
