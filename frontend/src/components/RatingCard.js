@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useAuth0 } from "../react-auth0-spa"
+import { useHistory } from "react-router-dom"
 
 import { deleteRating } from '../api/ratings-api'
 
@@ -13,6 +14,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 const RatingCard = (props) => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0()
   const { rating } = props
+  const history = useHistory();
 
 
   const handleDelete = async e => {
@@ -24,6 +26,10 @@ const RatingCard = (props) => {
     catch (e) {
       alert('Rating creation failed')
     }
+  }
+
+  const handleUpdate = e => {
+    history.push(`/update/${rating.ratingId}`)
   }
 
   return (
@@ -54,7 +60,7 @@ const RatingCard = (props) => {
       {isAuthenticated && (
         <div className="rating-card-admin">
             <button onClick={handleDelete}>Delete</button>
-            <button>Update</button>
+            <button onClick={handleUpdate}>Update</button>
         </div>
       )}
     </div>

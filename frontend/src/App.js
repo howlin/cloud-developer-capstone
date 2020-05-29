@@ -30,6 +30,23 @@ function App() {
     return <div>Loading ...</div>
   }
 
+  const getRating = ratingId => {
+    const rating = ratings.filter( rating => rating.ratingId === ratingId )
+    return rating[0] || null
+  }
+
+  // TODO: remove the duplicate call to getRatings
+  //       leaving it in for now as it fixes an infinite loop bug we have while fetching results inside useEffect
+  const refresh = () => {
+    setRatings([])
+    const fetch = async e => {
+      const jwt = await getIdTokenClaims()
+      const results = await getRatings(jwt) ?? []
+      setRatings(results)
+    }
+    fetch()
+  }
+
   return (
     <div className="app">
       <Router history={history}>
@@ -39,7 +56,8 @@ function App() {
         <main>
           <Switch>
             <PrivateRoute path='/' ratings={ratings} component={RatingList} exact />
-            <PrivateRoute path='/create' setRatings={setRatings} component={Create} exact />
+            <PrivateRoute path='/update/:ratingId' refresh={refresh} getRating={getRating} component={Create}  exact />
+            <PrivateRoute path='/create' refresh={refresh} getRating={getRating} component={Create} exact />
             <PrivateRoute path='/profile' component={Profile} exact />
           </Switch>
         </main>

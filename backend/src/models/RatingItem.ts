@@ -1,7 +1,7 @@
 export interface RatingItem {
   userId: string
   ratingId: string
-  createdAt: string
+  createdAt?: string
   shop: string,
   rating: number,
   review: string,

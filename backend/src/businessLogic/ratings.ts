@@ -1,7 +1,7 @@
 import * as uuid from 'uuid'
 import { RatingItem } from '../models/RatingItem'
 import { RatingAccess } from '../dataLayer/ratingAccess'
-import { CreateRatingRequest } from '../requests/CreateRatingRequest'
+import { RatingRequest } from '../requests/RatingRequest'
 import { parseUserId } from '../auth/utils'
 
 const ratingAccess = new RatingAccess()
@@ -12,7 +12,7 @@ export async function getAllRatings(jwtToken: string): Promise<RatingItem[]> {
 }
 
 export async function createRating(
-  createRatingRequest: CreateRatingRequest,
+  createRatingRequest: RatingRequest,
   jwtToken: string
 ): Promise<RatingItem> {
 
@@ -28,6 +28,15 @@ export async function createRating(
     review: createRatingRequest.review
   })
   
+}
+
+export async function updateRating(
+  updateRatingRequest: RatingRequest,
+  jwtToken: string,
+  ratingId: string
+) {
+  const userId = parseUserId(jwtToken)
+  return await ratingAccess.updateRating( updateRatingRequest, userId, ratingId)
 }
 
 export async function generateUploadUrl(ratingId: string, jwtToken: string) : Promise<string> {

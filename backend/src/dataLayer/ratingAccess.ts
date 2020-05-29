@@ -3,6 +3,7 @@ import * as AWSXRay from 'aws-xray-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
 import { RatingItem } from '../models/RatingItem'
+import { RatingRequest } from '../requests/RatingRequest'
 
 const logger = createLogger('Data layer')
 const XAWS = AWSXRay.captureAWS(AWS)
@@ -45,6 +46,26 @@ export class RatingAccess {
     logger.info('Create a damn rating', params)
     await this.docClient.put(params).promise()
 
+    return rating
+  }
+
+  async updateRating(rating: RatingRequest, userId: string, ratingId: string) {
+    const params = {
+      TableName: this.ratingsTable,
+      Key: {
+        userId: userId,
+        ratingId: ratingId
+      },
+      UpdateExpression: "set shop = :shop, rating = :rating, review = :review",
+      ExpressionAttributeValues: {
+        ':shop': rating.shop,
+        ':rating': rating.rating,
+        ':review': rating.review,
+      }
+    }
+
+    logger.info('updating a rating', params)
+    await this.docClient.update(params).promise()
     return rating
   }
 

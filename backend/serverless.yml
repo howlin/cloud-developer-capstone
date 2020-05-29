@@ -107,6 +107,26 @@ functions:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RATINGS_TABLE}
 
+  UpdateRating:
+    handler: src/lambda/http/updateRating.handler
+    iamRoleStatementsInherit: true
+    events:
+      - http:
+          method: patch
+          authorizer: Auth
+          cors: true
+          path: ratings/{ratingId}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RATINGS_TABLE}
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+
 
 # ---------------------------------------------------------------------
 

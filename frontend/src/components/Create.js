@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/fontawesome-free-solid'
 import { faStar as farStar } from '@fortawesome/fontawesome-free-regular'
 import Rating from 'react-rating'
-import { createRating } from '../api/ratings-api'
+import { createRating, updateRating } from '../api/ratings-api'
 import { useAuth0 } from "../react-auth0-spa"
 
 import RingLoader from "react-spinners/RingLoader"
@@ -13,13 +13,13 @@ import RingLoader from "react-spinners/RingLoader"
 const Create = (props) => {
   const { getIdTokenClaims } = useAuth0()
   const history = useHistory();
+  const ratingId = props.match.params.ratingId
 
-  const [ state, setState ] = useState({
-    shop: '',
-    rating: 0,
-    review: '',
-    file: ''
-  })
+  const isUpdating = !!ratingId
+
+  const seed = props.getRating(ratingId) ?? { shop: '', rating: 0, review: '', file: ''}
+
+  const [ state, setState ] = useState(seed)
   const [ isUploading, setIsUploading ] = useState( false )
 
   const handleReviewChange = ( e ) => {
@@ -40,27 +40,51 @@ const Create = (props) => {
     setState(prev => ({...prev, file: files[0]}))
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    const jwt = await getIdTokenClaims()
-
-    setIsUploading( true )
-    
+  const callCreateAPI = async ( jwt ) => {
     try {
-      const newRating = await createRating(jwt, {
+      await createRating(jwt, {
         shop: state.shop,
         rating: state.rating,
         review: state.review,
         file: state.file
       })
-      setIsUploading( false )
-      props.setRatings(prev => ([...prev, newRating]))
-      history.push('/')
     }
     catch (e) {
       alert('Rating creation failed')
+      console.log(e)
     }
+  }
 
+  const callUpdateAPI = async ( jwt ) => {
+    try {
+      await updateRating(jwt, ratingId, {
+        shop: state.shop,
+        rating: state.rating,
+        review: state.review,
+        file: state.file
+      })
+    }
+    catch (e) {
+      alert('Rating update failed')
+      console.log(e)
+    }
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const jwt = await getIdTokenClaims()
+
+    setIsUploading( true )
+
+    if (isUpdating) {
+      await callUpdateAPI( jwt )
+    }else {
+      await callCreateAPI( jwt )
+    }
+    
+    setIsUploading( false )
+    props.refresh()
+    history.push('/')
   }
 
   return (
@@ -137,7 +161,8 @@ const Create = (props) => {
 }
 
 Create.propTypes = {
-  setRatings: PropTypes.func.isRequired
+  getRating: PropTypes.func.isRequired,
+  refresh: PropTypes.func.isRequired
 }
 
 export default Create

@@ -36,8 +36,33 @@ export async function createRating(idToken, newRating) {
   return ratingItem
 }
 
+export async function updateRating(idToken, ratingId, updatedRating) {
+  const response = await updateRatinginDB(idToken, ratingId, updatedRating)
+  let ratingItem = response.data.item
+
+  if( updatedRating.file ) {
+    const ratingId = ratingItem.ratingId
+    const uploadUrl = await getImageUploadURL(idToken, ratingId)
+    ratingItem.attachementUrl = uploadUrl
+
+    await uploadFile(uploadUrl, updatedRating.file)
+  }
+
+  return ratingItem
+}
+
 async function addRatingToDB(idToken, newRating) {
   const response = await Axios.post(`${apiEndpoint}/ratings`, JSON.stringify(newRating), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken.__raw}`
+    }
+  })
+  return response
+}
+
+async function updateRatinginDB(idToken, ratingId, updatedRating) {
+  const response = await Axios.patch(`${apiEndpoint}/ratings/${ratingId}`, JSON.stringify(updatedRating), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken.__raw}`
