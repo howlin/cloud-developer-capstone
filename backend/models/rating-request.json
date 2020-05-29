@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "rating-request",
+  "type": "object",
+  "properties": {
+    "shop": {
+      "type": "string",
+      "minLength": 3
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "shop",
+    "rating",
+    "review"
+  ],
+  "additionalProperties": false
+}
