@@ -40,6 +40,8 @@ The config details to connect to the backend and Auth0 are committed.   I’m le
 
 * Incoming HTTP requests are validated either in Lambda handlers or using request validation in API Gateway. The latter can be done either using the **serverless-reqvalidator-plugin** or by providing request schemas in function definitions.
 	* ✅ Done.  Uses the request schemas in function definitions 
+	
+### (Option 2):Architecture
 * 1:M (1 to many) relationship between users and items is modeled using a DynamoDB table that has a composite key with both partition and sort keys. Should be defined similar to this:
 ```
    KeySchema:
